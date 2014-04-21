@@ -3,15 +3,16 @@
 import os.path
 
 #init
-base_file = os.path.abspath("base.txt")
-new_file = os.path.abspath("new.txt")
-inc_file = os.path.abspath("inc.txt")
-chg_file = os.path.abspath("chg.txt")
+base_file = os.path.abspath("data/base.txt")
+new_file = os.path.abspath("data/new.txt")
+inc_file = os.path.abspath("data/increment.txt")
+chg_file = os.path.abspath("data/change.txt")
 sep = '|'
 key_column = (0,)
 
 finc = open(inc_file,'w')
 fchg = open(chg_file,'w')
+
 #base dict,  key:line
 base_dict = {}
 with open(base_file) as fbase:
@@ -25,7 +26,9 @@ with open(new_file) as fnew:
     for line in fnew:
         tmp_list = line.split(sep)
         key_list = sep.join([ tmp_list[i] for i in key_column ])
+        #compare keys
         if hash(key_list) in base_dict:
+            #compare lines
             if hash(line)!=base_dict[hash(key_list)]:
                 fchg.write(line)
         else:
